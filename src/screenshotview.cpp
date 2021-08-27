@@ -42,9 +42,13 @@ ScreenshotView::ScreenshotView(QQuickView *parent)
 
     rootContext()->setContextProperty("view", this);
 
+    setFlags(Qt::WindowStaysOnTopHint);
     setResizeMode(QQuickView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
     showFullScreen();
+
+    setMouseGrabEnabled(true);
+    setKeyboardGrabEnabled(true);
 }
 
 void ScreenshotView::quit()

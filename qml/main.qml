@@ -30,11 +30,6 @@ Item {
     property rect cropRect
     property bool cropping: false
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: Qt.quit()
-    }
-
     Image {
         id: image
         anchors.fill: parent
@@ -88,6 +83,18 @@ Item {
             border.color: FishUI.Theme.highlightColor
         }
 
+        DragHandler {
+            target: selectLayer
+
+            xAxis.enabled: true
+            xAxis.minimum: control.x
+            xAxis.maximum: control.width - selectLayer.width
+
+            yAxis.enabled: true
+            yAxis.minimum: control.y
+            yAxis.maximum: control.height - selectLayer.height
+        }
+
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.SizeAllCursor
@@ -126,8 +133,9 @@ Item {
         visible: sizeToolTip.visible
 
         z: 999
-        x: selectLayer.x
-        y: selectLayer.y + selectLayer.height + FishUI.Units.smallSpacing
+        x: selectLayer.x + selectLayer.width - tools.width
+        y: selectLayer.y + selectLayer.height + tools.height >= control.height ? selectLayer.y - tools.height - FishUI.Units.smallSpacing
+                                                                               : selectLayer.y + selectLayer.height + FishUI.Units.smallSpacing
 
         radius: FishUI.Theme.smallRadius
 
