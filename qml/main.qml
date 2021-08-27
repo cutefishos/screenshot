@@ -158,10 +158,10 @@ Item {
                 iconMargins: FishUI.Units.largeSpacing
                 size: 36
                 source: "qrc:/images/save.svg"
-                onClicked: view.saveFile(Qt.rect(selectLayer.x,
-                                                 selectLayer.y,
-                                                 selectLayer.width,
-                                                 selectLayer.height))
+                onClicked: view.saveFile(Qt.rect(selectLayer.x * Screen.devicePixelRatio,
+                                                 selectLayer.y * Screen.devicePixelRatio,
+                                                 selectLayer.width * Screen.devicePixelRatio,
+                                                 selectLayer.height * Screen.devicePixelRatio))
             }
 
             ImageButton {
