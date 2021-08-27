@@ -131,14 +131,32 @@ Item {
         height: 36 + FishUI.Units.smallSpacing
 
         visible: sizeToolTip.visible
-
         z: 999
+
+        // 放在右侧
         x: selectLayer.x + selectLayer.width - tools.width
-        y: selectLayer.y + selectLayer.height + tools.height >= control.height ? selectLayer.y - tools.height - FishUI.Units.smallSpacing
-                                                                               : selectLayer.y + selectLayer.height + FishUI.Units.smallSpacing
+
+        y: {
+            var newY = 0
+
+//            if (selectLayer.y <= control.y
+//                    && selectLayer.height + tools.height >= control.height)
+//                newY = control.height - tools.height
+
+            // 选中区域与工具栏高度大于总高度
+            if (selectLayer.y + selectLayer.height + tools.height + FishUI.Units.smallSpacing >= control.height) {
+                newY = selectLayer.y - tools.height - FishUI.Units.smallSpacing
+            } else {
+                newY = selectLayer.y + selectLayer.height + FishUI.Units.smallSpacing
+            }
+
+            if (newY < control.y || newY > control.y + control.height)
+                newY = control.height - tools.height
+
+            return newY
+        }
 
         radius: FishUI.Theme.smallRadius
-
         color: FishUI.Theme.backgroundColor
 
         MouseArea {
