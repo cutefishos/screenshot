@@ -19,7 +19,9 @@
 
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
+import FishUI 1.0 as FishUI
 
 Item {
     id: control
@@ -52,6 +54,7 @@ Item {
         property int newX: 0
         property int newY: 0
 
+        z: 999
         height: 0
         width: 0
         x: 0
@@ -76,11 +79,48 @@ Item {
             x: -selectLayer.x
             y: -selectLayer.y
         }
+
+        Rectangle {
+            anchors.fill: parent
+            color: "transparent"
+            border.width: 2
+            border.color: FishUI.Theme.highlightColor
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.SizeAllCursor
+        }
     }
 
+    Rectangle {
+        id: sizeToolTip
+        visible: selectLayer.visible && selectLayer.width > 1 && selectLayer.height > 1
+
+        width: sizeLabel.implicitWidth + FishUI.Units.largeSpacing
+        height: sizeLabel.implicitHeight + FishUI.Units.largeSpacing
+
+        x: selectLayer.x
+        y: selectLayer.y - sizeToolTip.height - FishUI.Units.smallSpacing
+
+        radius: FishUI.Theme.smallRadius
+
+        color: Qt.rgba(FishUI.Theme.backgroundColor.r,
+                       FishUI.Theme.backgroundColor.g,
+                       FishUI.Theme.backgroundColor.b, 0.8)
+
+        Label {
+            id: sizeLabel
+            anchors.centerIn: parent
+            text: "%1 * %2".arg(parseInt(selectLayer.width)).arg(parseInt(selectLayer.height))
+        }
+    }
+
+    // Global
     MouseArea {
         id: mouseArea
         anchors.fill: parent
+        cursorShape: Qt.CrossCursor
 
         onPressed: {
             selectLayer.visible = true
