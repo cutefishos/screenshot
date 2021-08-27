@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Screenshot
+Name[zh_CN]=截图
+Exec=cutefish-screenshot
+Icon=cutefish-screenshot
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Settings;

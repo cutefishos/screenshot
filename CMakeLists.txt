@@ -29,3 +29,11 @@ target_link_libraries(cutefish-screenshot
   Qt5::Gui
   Qt5::Quick
 )
+
+install(TARGETS cutefish-screenshot RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+install(FILES
+    cutefish-screenshot.desktop
+    DESTINATION /usr/share/applications/
+    COMPONENT Runtime
+)
