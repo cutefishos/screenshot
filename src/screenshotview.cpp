@@ -18,6 +18,10 @@
  */
 
 #include "screenshotview.h"
+
+#include <QEventLoop>
+#include <QTimer>
+
 #include <QGuiApplication>
 #include <QQmlContext>
 #include <QScreen>
@@ -28,6 +32,10 @@
 ScreenshotView::ScreenshotView(QQuickView *parent)
     : QQuickView(parent)
 {
+    QEventLoop waitLoop;
+    QTimer::singleShot(250, &waitLoop, SLOT(quit()));
+    waitLoop.exec();
+
     // 保存图片
     QPixmap p = qGuiApp->primaryScreen()->grabWindow(0);
     p.save("/tmp/cutefish-screenshot.png");
