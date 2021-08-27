@@ -20,6 +20,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import FishUI 1.0 as FishUI
 
@@ -113,6 +114,60 @@ Item {
             id: sizeLabel
             anchors.centerIn: parent
             text: "%1 * %2".arg(parseInt(selectLayer.width)).arg(parseInt(selectLayer.height))
+        }
+    }
+
+    Rectangle {
+        id: tools
+
+        width: toolsLayout.implicitWidth + FishUI.Units.largeSpacing
+        height: 36 + FishUI.Units.smallSpacing
+
+        visible: sizeToolTip.visible
+
+        z: 999
+        x: selectLayer.x
+        y: selectLayer.y + selectLayer.height + FishUI.Units.smallSpacing
+
+        radius: FishUI.Theme.smallRadius
+
+        color: FishUI.Theme.backgroundColor
+
+        MouseArea {
+            anchors.fill: parent
+        }
+
+        RowLayout {
+            id: toolsLayout
+            anchors.fill: parent
+
+            anchors.leftMargin: FishUI.Units.smallSpacing
+            anchors.rightMargin: FishUI.Units.smallSpacing
+            anchors.topMargin: FishUI.Units.smallSpacing / 2
+            anchors.bottomMargin: FishUI.Units.smallSpacing / 2
+
+            ImageButton {
+                iconMargins: FishUI.Units.largeSpacing
+                size: 36
+                source: "qrc:/images/save.svg"
+                onClicked: view.saveFile(Qt.rect(selectLayer.x,
+                                                 selectLayer.y,
+                                                 selectLayer.width,
+                                                 selectLayer.height))
+            }
+
+            ImageButton {
+                iconMargins: FishUI.Units.largeSpacing
+                size: 36
+                source: "qrc:/images/cancel.svg"
+                onClicked: view.quit()
+            }
+
+            ImageButton {
+                iconMargins: FishUI.Units.largeSpacing
+                size: 36
+                source: "qrc:/images/ok.svg"
+            }
         }
     }
 

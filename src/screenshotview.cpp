@@ -19,8 +19,11 @@
 
 #include "screenshotview.h"
 #include <QGuiApplication>
+#include <QQmlContext>
 #include <QScreen>
 #include <QPixmap>
+#include <QStandardPaths>
+#include <QDateTime>
 
 ScreenshotView::ScreenshotView(QQuickView *parent)
     : QQuickView(parent)
@@ -29,7 +32,28 @@ ScreenshotView::ScreenshotView(QQuickView *parent)
     QPixmap p = qGuiApp->primaryScreen()->grabWindow(0);
     p.save("/tmp/cutefish-screenshot.png");
 
+    rootContext()->setContextProperty("view", this);
+
     setResizeMode(QQuickView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
     showFullScreen();
+}
+
+void ScreenshotView::quit()
+{
+    qGuiApp->quit();
+}
+
+void ScreenshotView::saveFile(QRect rect)
+{
+    QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    QString fileName = QString("%1/Screenshot_%2.png")
+                              .arg(desktopPath)
+                              .arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss"));
+
+    QImage image("/tmp/cutefish-screenshot.png");
+    QImage cropped = image.copy(rect);
+    cropped.save(fileName);
+
+    this->quit();
 }
