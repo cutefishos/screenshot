@@ -19,6 +19,7 @@
 
 #include "screenshotview.h"
 
+#include <QClipboard>
 #include <QEventLoop>
 #include <QTimer>
 
@@ -58,6 +59,8 @@ void ScreenshotView::quit()
 
 void ScreenshotView::saveFile(QRect rect)
 {
+    setVisible(false);
+
     QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     QString fileName = QString("%1/Screenshot_%2.png")
                               .arg(desktopPath)
@@ -66,6 +69,18 @@ void ScreenshotView::saveFile(QRect rect)
     QImage image("/tmp/cutefish-screenshot.png");
     QImage cropped = image.copy(rect);
     cropped.save(fileName);
+
+    this->quit();
+}
+
+void ScreenshotView::copyToClipboard(QRect rect)
+{
+    setVisible(false);
+
+    QImage image("/tmp/cutefish-screenshot.png");
+    QImage cropped = image.copy(rect);
+    QClipboard *clipboard = qGuiApp->clipboard();
+    clipboard->setImage(cropped);
 
     this->quit();
 }

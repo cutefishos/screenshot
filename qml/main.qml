@@ -193,6 +193,12 @@ Item {
                 iconMargins: FishUI.Units.largeSpacing
                 size: 36
                 source: "qrc:/images/ok.svg"
+                onClicked: {
+                    view.copyToClipboard(Qt.rect(selectLayer.x * Screen.devicePixelRatio,
+                                                 selectLayer.y * Screen.devicePixelRatio,
+                                                 selectLayer.width * Screen.devicePixelRatio,
+                                                 selectLayer.height * Screen.devicePixelRatio))
+                }
             }
         }
     }
