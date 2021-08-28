@@ -17,12 +17,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGuiApplication>
+#include <QApplication>
+#include <QDBusConnection>
+#include <QCommandLineOption>
+#include <QCommandLineParser>
+
 #include "screenshotview.h"
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
+
+    QCommandLineOption delayOption(QStringList() << "d" << "delay", "Delay Screenshot", "NUM");
+    QCommandLineParser parser;
+    parser.setApplicationDescription("Cutefish Screenshot");
+    parser.addHelpOption();
+    parser.addOption(delayOption);
+    parser.process(app);
+
+    if (!QDBusConnection::sessionBus().registerService("org.cutefish.Screenshot")) {
+        app.exit();
+        return 0;
+    }
+
     ScreenshotView view;
+    if (parser.isSet(delayOption)) {
+        view.delay(parser.value(delayOption).toInt());
+    } else {
+        view.start();
+    }
+
     return app.exec();
 }

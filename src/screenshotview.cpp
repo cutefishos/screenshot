@@ -33,23 +33,31 @@
 ScreenshotView::ScreenshotView(QQuickView *parent)
     : QQuickView(parent)
 {
-    QEventLoop waitLoop;
-    QTimer::singleShot(250, &waitLoop, SLOT(quit()));
-    waitLoop.exec();
 
+}
+
+void ScreenshotView::start()
+{
     // 保存图片
     QPixmap p = qGuiApp->primaryScreen()->grabWindow(0);
     p.save("/tmp/cutefish-screenshot.png");
 
     rootContext()->setContextProperty("view", this);
 
+    setScreen(qGuiApp->primaryScreen());
     setFlags(Qt::WindowStaysOnTopHint);
     setResizeMode(QQuickView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
     showFullScreen();
+}
 
-    setMouseGrabEnabled(true);
-    setKeyboardGrabEnabled(true);
+void ScreenshotView::delay(int value)
+{
+    QEventLoop waitLoop;
+    QTimer::singleShot(value, &waitLoop, SLOT(quit()));
+    waitLoop.exec();
+
+    start();
 }
 
 void ScreenshotView::quit()
