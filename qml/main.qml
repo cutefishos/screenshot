@@ -30,10 +30,25 @@ Item {
     property rect cropRect
     property bool cropping: false
 
+    function refreshImage() {
+        image.source = ""
+        image.source = "file:///tmp/cutefish-screenshot.png"
+
+        selectImage.source = ""
+        selectImage.source = "file:///tmp/cutefish-screenshot.png"
+    }
+
+    Connections {
+        target: view
+
+        function onRefresh() {
+            control.refreshImage()
+        }
+    }
+
     Image {
         id: image
         anchors.fill: parent
-        source: "file:///tmp/cutefish-screenshot.png"
         asynchronous: true
 
         Rectangle {
@@ -69,9 +84,10 @@ Item {
         }
 
         Image {
-            source: "file:///tmp/cutefish-screenshot.png"
+            id: selectImage
             width: control.width
             height: control.height
+            asynchronous: true
             x: -selectLayer.x
             y: -selectLayer.y
         }

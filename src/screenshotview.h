@@ -35,6 +35,11 @@ public:
     Q_INVOKABLE void quit();
     Q_INVOKABLE void saveFile(QRect rect);
     Q_INVOKABLE void copyToClipboard(QRect rect);
+
+    void removeTmpFile();
+
+signals:
+    void refresh();
 };
 
 #endif // SCREENSHOTVIEW_H

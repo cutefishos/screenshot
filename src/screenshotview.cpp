@@ -33,7 +33,12 @@
 ScreenshotView::ScreenshotView(QQuickView *parent)
     : QQuickView(parent)
 {
+    rootContext()->setContextProperty("view", this);
 
+    setFlags(Qt::FramelessWindowHint);
+    setScreen(qGuiApp->primaryScreen());
+    setResizeMode(QQuickView::SizeRootObjectToView);
+    setSource(QUrl("qrc:/qml/main.qml"));
 }
 
 void ScreenshotView::start()
@@ -42,13 +47,9 @@ void ScreenshotView::start()
     QPixmap p = qGuiApp->primaryScreen()->grabWindow(0);
     p.save("/tmp/cutefish-screenshot.png");
 
-    rootContext()->setContextProperty("view", this);
-
-    setScreen(qGuiApp->primaryScreen());
-    setFlags(Qt::WindowStaysOnTopHint);
-    setResizeMode(QQuickView::SizeRootObjectToView);
-    setSource(QUrl("qrc:/qml/main.qml"));
     showFullScreen();
+
+    emit refresh();
 }
 
 void ScreenshotView::delay(int value)
@@ -78,6 +79,7 @@ void ScreenshotView::saveFile(QRect rect)
     QImage cropped = image.copy(rect);
     cropped.save(fileName);
 
+    removeTmpFile();
     this->quit();
 }
 
@@ -90,5 +92,11 @@ void ScreenshotView::copyToClipboard(QRect rect)
     QClipboard *clipboard = qGuiApp->clipboard();
     clipboard->setImage(cropped);
 
+    removeTmpFile();
     this->quit();
+}
+
+void ScreenshotView::removeTmpFile()
+{
+    bool success = QFile("/tmp/cutefish-screenshot.png").remove();
 }
