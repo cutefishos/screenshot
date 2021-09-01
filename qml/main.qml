@@ -38,6 +38,20 @@ Item {
         selectImage.source = "file:///tmp/cutefish-screenshot.png"
     }
 
+    function save() {
+        view.saveFile(Qt.rect(selectLayer.x * Screen.devicePixelRatio,
+                              selectLayer.y * Screen.devicePixelRatio,
+                              selectLayer.width * Screen.devicePixelRatio,
+                              selectLayer.height * Screen.devicePixelRatio))
+    }
+
+    function copyToClipboard() {
+        view.copyToClipboard(Qt.rect(selectLayer.x * Screen.devicePixelRatio,
+                                     selectLayer.y * Screen.devicePixelRatio,
+                                     selectLayer.width * Screen.devicePixelRatio,
+                                     selectLayer.height * Screen.devicePixelRatio))
+    }
+
     Connections {
         target: view
 
@@ -114,6 +128,8 @@ Item {
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.SizeAllCursor
+            acceptedButtons: Qt.LeftButton
+            onDoubleClicked: control.save()
         }
     }
 
@@ -192,10 +208,7 @@ Item {
                 iconMargins: FishUI.Units.largeSpacing
                 size: 36
                 source: "qrc:/images/save.svg"
-                onClicked: view.saveFile(Qt.rect(selectLayer.x * Screen.devicePixelRatio,
-                                                 selectLayer.y * Screen.devicePixelRatio,
-                                                 selectLayer.width * Screen.devicePixelRatio,
-                                                 selectLayer.height * Screen.devicePixelRatio))
+                onClicked: control.save()
             }
 
             ImageButton {
@@ -209,12 +222,7 @@ Item {
                 iconMargins: FishUI.Units.largeSpacing
                 size: 36
                 source: "qrc:/images/ok.svg"
-                onClicked: {
-                    view.copyToClipboard(Qt.rect(selectLayer.x * Screen.devicePixelRatio,
-                                                 selectLayer.y * Screen.devicePixelRatio,
-                                                 selectLayer.width * Screen.devicePixelRatio,
-                                                 selectLayer.height * Screen.devicePixelRatio))
-                }
+                onClicked: control.copyToClipboard()
             }
         }
     }
