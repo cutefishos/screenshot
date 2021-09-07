@@ -35,6 +35,46 @@ Item {
     Keys.enabled: true
     Keys.onEscapePressed: view.quit()
 
+    Keys.onLeftPressed: {
+        if (selectLayer.visible) {
+            var newX =  selectLayer.x -= 10
+            if (newX < control.x)
+                newX = control.x
+
+            selectLayer.x = newX
+        }
+    }
+
+    Keys.onRightPressed: {
+        if (selectLayer.visible) {
+            var newX =  selectLayer.x += 10
+            if (newX > control.width - selectLayer.width)
+                newX = control.width - selectLayer.width
+
+            selectLayer.x = newX
+        }
+    }
+
+    Keys.onUpPressed: {
+        if (selectLayer.visible) {
+            var newY = selectLayer.y -= 10
+            if (newY < control.y)
+                newY = control.y
+
+            selectLayer.y = newY
+        }
+    }
+
+    Keys.onDownPressed: {
+        if (selectLayer.visible) {
+            var newY = selectLayer.y += 10
+            if (newY > control.height - selectLayer.height)
+                newY = control.height - selectLayer.height
+
+            selectLayer.y = newY
+        }
+    }
+
     function refreshImage() {
         image.source = ""
         image.source = "file:///tmp/cutefish-screenshot.png"
