@@ -27,8 +27,13 @@ import FishUI 1.0 as FishUI
 Item {
     id: control
 
+    focus: true
+
     property rect cropRect
     property bool cropping: false
+
+    Keys.enabled: true
+    Keys.onEscapePressed: view.quit()
 
     function refreshImage() {
         image.source = ""
@@ -189,7 +194,7 @@ Item {
         }
 
         radius: FishUI.Theme.smallRadius
-        color: FishUI.Theme.backgroundColor
+        color: "white"
 
         MouseArea {
             anchors.fill: parent

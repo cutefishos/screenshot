@@ -30,10 +30,13 @@ Item {
     height: size
     width: size
 
-    property color hoveredColor: FishUI.Theme.darkMode ? Qt.lighter(FishUI.Theme.backgroundColor, 2)
-                                                   : Qt.darker(FishUI.Theme.backgroundColor, 1.2)
-    property color pressedColor: FishUI.Theme.darkMode ? Qt.lighter(FishUI.Theme.backgroundColor, 1.5)
-                                                     : Qt.darker(FishUI.Theme.backgroundColor, 1.3)
+    property color backgroundColor: "white"
+    property color hoveredColor: Qt.darker(backgroundColor, 1.2)
+    property color pressedColor: Qt.darker(backgroundColor, 1.3)
+//    property color hoveredColor: FishUI.Theme.darkMode ? Qt.lighter(FishUI.Theme.backgroundColor, 2)
+//                                                   : Qt.darker(FishUI.Theme.backgroundColor, 1.2)
+//    property color pressedColor: FishUI.Theme.darkMode ? Qt.lighter(FishUI.Theme.backgroundColor, 1.5)
+//                                                     : Qt.darker(FishUI.Theme.backgroundColor, 1.3)
     property alias source: _image.source
     property alias image: _image
     signal clicked()
