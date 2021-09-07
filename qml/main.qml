@@ -171,6 +171,7 @@ Item {
         }
 
         MouseArea {
+            id: selectLayerMouseArea
             anchors.fill: parent
             cursorShape: Qt.SizeAllCursor
             acceptedButtons: Qt.LeftButton
@@ -185,14 +186,26 @@ Item {
         width: sizeLabel.implicitWidth + FishUI.Units.largeSpacing
         height: sizeLabel.implicitHeight + FishUI.Units.largeSpacing
 
+        z: 999
         x: selectLayer.x
-        y: selectLayer.y - sizeToolTip.height - FishUI.Units.smallSpacing
+        y: {
+            var newY = selectLayer.y - sizeToolTip.height - FishUI.Units.smallSpacing
+
+            if (newY < control.y)
+                newY = control.y
+
+            return newY
+        }
 
         radius: FishUI.Theme.smallRadius
 
         color: Qt.rgba(FishUI.Theme.backgroundColor.r,
                        FishUI.Theme.backgroundColor.g,
-                       FishUI.Theme.backgroundColor.b, 0.8)
+                       FishUI.Theme.backgroundColor.b, 0.9)
+        border.width: 1
+        border.color: Qt.rgba(FishUI.Theme.textColor.r,
+                               FishUI.Theme.textColor.g,
+                               FishUI.Theme.textColor.b, 0.15)
 
         Label {
             id: sizeLabel
@@ -207,7 +220,7 @@ Item {
         width: toolsLayout.implicitWidth + FishUI.Units.largeSpacing
         height: 36 + FishUI.Units.smallSpacing
 
-        visible: sizeToolTip.visible
+        visible: selectLayer.visible && selectLayer.width > 1 && selectLayer.height > 1
         z: 999
 
         // 放在右侧
