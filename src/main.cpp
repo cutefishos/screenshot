@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     parser.addOption(delayOption);
     parser.process(app);
 
-    if (!QDBusConnection::sessionBus().registerService("org.cutefish.Screenshot")) {
+    if (!QDBusConnection::sessionBus().registerService("com.cutefish.Screenshot")) {
         app.exit();
         return 0;
     }
