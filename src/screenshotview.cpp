@@ -31,6 +31,7 @@
 #include <QDateTime>
 
 #include <QDBusInterface>
+#include <QDBusPendingCall>
 
 ScreenshotView::ScreenshotView(QQuickView *parent)
     : QQuickView(parent)
