@@ -21,6 +21,8 @@
 #include <QDBusConnection>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
+#include <QTranslator>
+#include <QLocale>
 
 #include "screenshotview.h"
 
@@ -38,6 +40,16 @@ int main(int argc, char *argv[])
     if (!QDBusConnection::sessionBus().registerService("com.cutefish.Screenshot")) {
         app.exit();
         return 0;
+    }
+
+    QString qmFilePath = QString("%1/%2.qm").arg("/usr/share/cutefish-screenshot/translations/").arg(QLocale::system().name());
+    if (QFile::exists(qmFilePath)) {
+        QTranslator *translator = new QTranslator(QApplication::instance());
+        if (translator->load(qmFilePath)) {
+            QApplication::installTranslator(translator);
+        } else {
+            translator->deleteLater();
+        }
     }
 
     ScreenshotView view;

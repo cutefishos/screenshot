@@ -11,7 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Core DBus Gui Widgets Quick REQUIRED)
+find_package(Qt5 COMPONENTS Core DBus Gui Widgets Quick LinguistTools REQUIRED)
 
 set(PROJECT_SOURCES
     src/main.cpp
@@ -31,6 +31,13 @@ target_link_libraries(cutefish-screenshot
   Qt5::Widgets
   Qt5::Quick
 )
+
+file(GLOB TS_FILES translations/*.ts)
+qt5_create_translation(QM_FILES ${TS_FILES})
+add_custom_target(translations DEPENDS ${QM_FILES} SOURCES ${TS_FILES})
+add_dependencies(cutefish-screenshot translations)
+
+install(FILES ${QM_FILES} DESTINATION /usr/share/cutefish-screenshot/translations)
 
 install(TARGETS cutefish-screenshot RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
