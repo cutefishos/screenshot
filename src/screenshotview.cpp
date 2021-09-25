@@ -30,6 +30,8 @@
 #include <QStandardPaths>
 #include <QDateTime>
 
+#include <QDBusInterface>
+
 ScreenshotView::ScreenshotView(QQuickView *parent)
     : QQuickView(parent)
 {
@@ -78,6 +80,23 @@ void ScreenshotView::saveFile(QRect rect)
     QImage image("/tmp/cutefish-screenshot.png");
     QImage cropped = image.copy(rect);
     cropped.save(fileName);
+
+    QDBusInterface iface("org.freedesktop.Notifications",
+                         "/org/freedesktop/Notifications",
+                         "org.freedesktop.Notifications",
+                         QDBusConnection::sessionBus());
+    if (iface.isValid()) {
+        QList<QVariant> args;
+        args << "cutefish-screenshot";
+        args << ((unsigned int) 0);
+        args << "cutefish-screenshot";
+        args << "";
+        args << tr("The picture has been saved to %1").arg(fileName);
+        args << QStringList();
+        args << QVariantMap();
+        args << (int) 10;
+        iface.asyncCallWithArgumentList("Notify", args);
+    }
 
     removeTmpFile();
     this->quit();
