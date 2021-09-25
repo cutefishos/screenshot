@@ -38,10 +38,11 @@ ScreenshotView::ScreenshotView(QQuickView *parent)
 {
     rootContext()->setContextProperty("view", this);
 
-    setFlags(Qt::FramelessWindowHint);
+    setFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
     setScreen(qGuiApp->primaryScreen());
     setResizeMode(QQuickView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
+    setGeometry(screen()->geometry());
 }
 
 void ScreenshotView::start()
@@ -50,7 +51,7 @@ void ScreenshotView::start()
     QPixmap p = qGuiApp->primaryScreen()->grabWindow(0);
     p.save("/tmp/cutefish-screenshot.png");
 
-    showFullScreen();
+    setVisible(true);
 
     emit refresh();
 }
