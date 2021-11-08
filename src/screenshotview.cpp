@@ -52,6 +52,8 @@ void ScreenshotView::start()
     p.save("/tmp/cutefish-screenshot.png");
 
     setVisible(true);
+    setMouseGrabEnabled(true);
+    setKeyboardGrabEnabled(true);
 
     emit refresh();
 }
@@ -138,5 +140,5 @@ void ScreenshotView::copyToClipboard(QRect rect)
 
 void ScreenshotView::removeTmpFile()
 {
-    bool success = QFile("/tmp/cutefish-screenshot.png").remove();
+    QFile("/tmp/cutefish-screenshot.png").remove();
 }
