@@ -224,7 +224,15 @@ Item {
         z: 999
 
         // 放在右侧
-        x: selectLayer.x + selectLayer.width - tools.width
+        x: {
+            var newX = selectLayer.x + selectLayer.width - tools.width
+
+            if (newX < 0) {
+                return 0
+            }
+
+            return newX
+        }
 
         y: {
             var newY = 0
