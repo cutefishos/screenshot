@@ -52,7 +52,6 @@ void ScreenshotView::start()
     p.save("/tmp/cutefish-screenshot.png");
 
     setVisible(true);
-    setMouseGrabEnabled(true);
     setKeyboardGrabEnabled(true);
 
     emit refresh();

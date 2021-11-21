@@ -227,8 +227,8 @@ Item {
         x: {
             var newX = selectLayer.x + selectLayer.width - tools.width
 
-            if (newX < 0) {
-                return 0
+            if (newX < control.x) {
+                return control.x
             }
 
             return newX
