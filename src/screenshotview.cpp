@@ -134,7 +134,8 @@ void ScreenshotView::copyToClipboard(QRect rect)
     }
 
     removeTmpFile();
-    this->quit();
+
+    QTimer::singleShot(100, qGuiApp, &QGuiApplication::quit);
 }
 
 void ScreenshotView::removeTmpFile()
