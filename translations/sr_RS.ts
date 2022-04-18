@@ -6,12 +6,12 @@
     <message>
         <location filename="../src/screenshotview.cpp" line="96"/>
         <source>The picture has been saved to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Slika je sacuvana u %1</translation>
     </message>
     <message>
         <location filename="../src/screenshotview.cpp" line="127"/>
         <source>The picture has been saved to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Slika je sačuvana u clipboard</translation>
     </message>
 </context>
 </TS>
