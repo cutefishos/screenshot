@@ -123,7 +123,7 @@ Item {
 
         property int newX: 0
         property int newY: 0
-
+        property var control: parent
         z: 999
         height: 0
         width: 0
@@ -131,7 +131,6 @@ Item {
         y: 0
         visible: false
         clip: true
-
         function reset() {
             selectLayer.x = 0
             selectLayer.y = 0
@@ -151,31 +150,14 @@ Item {
             y: -selectLayer.y
         }
 
-        Rectangle {
+        MoveArea {
             anchors.fill: parent
-            color: "transparent"
-            border.width: 2
-            border.color: FishUI.Theme.highlightColor
+            control: parent
         }
 
-        DragHandler {
-            target: selectLayer
-
-            xAxis.enabled: true
-            xAxis.minimum: control.x
-            xAxis.maximum: control.width - selectLayer.width
-
-            yAxis.enabled: true
-            yAxis.minimum: control.y
-            yAxis.maximum: control.height - selectLayer.height
-        }
-
-        MouseArea {
-            id: selectLayerMouseArea
+        ResizeBorder {
+            control: parent
             anchors.fill: parent
-            cursorShape: Qt.SizeAllCursor
-            acceptedButtons: Qt.LeftButton
-            onDoubleClicked: control.save()
         }
     }
 
